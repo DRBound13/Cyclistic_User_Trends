@@ -11,4 +11,5 @@ Uncovering ridership patterns to drive membership growth for Chicago’s leading
 ## 3. Process
 - **Tools:** R (RStudio)
 - **Cleaning:** Merging 12 months of data, removing duplicates, and checking for missing values.
-- **Status:** Installing Tidyverse and preparing to merge 12 months of CSV data.
+- **Environment:** RStudio Desktop (Posit)
+- **Status:** Installing Tidyverse and initializing project directory.
