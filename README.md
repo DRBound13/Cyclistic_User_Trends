@@ -13,3 +13,6 @@ Uncovering ridership patterns to drive membership growth for Chicago’s leading
 - **Cleaning:** Merging 12 months of data, removing duplicates, and checking for missing values.
 - **Environment:** RStudio Desktop (Posit)
 - **Status:** Installing Tidyverse and initializing project directory.
+
+- **Action:** Merged 12 monthly CSV files into a single dataframe (`all_trips`).
+- **Status:** Data ingestion complete; moving to data cleaning and inspection.
