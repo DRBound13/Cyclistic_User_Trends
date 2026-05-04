@@ -16,3 +16,5 @@ Uncovering ridership patterns to drive membership growth for Chicago’s leading
 
 - **Action:** Merged 12 monthly CSV files into a single dataframe (`all_trips`).
 - **Status:** Data ingestion complete; moving to data cleaning and inspection.
+- **Action:** Converted `started_at` and `ended_at` columns to POSIXct (datetime) format.
+- **Status:** Data formatting in progress.
