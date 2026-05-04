@@ -9,5 +9,5 @@ Uncovering ridership patterns to drive membership growth for Chicago’s leading
 **Data Source:** 12 months of Cyclistic trip data.
 **Constraints:** No personal rider data is available.
 ## 3. Process
-- **Tools:** [Type Excel, SQL, or R here]
+- **Tools:** R
 - **Cleaning:** Merging 12 months of data, removing duplicates, and checking for missing values.
