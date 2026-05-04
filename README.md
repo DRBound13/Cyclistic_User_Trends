@@ -25,3 +25,5 @@ Uncovering ridership patterns to drive membership growth for Chicago’s leading
 - **Action:** Validated data; average ride length is 15.9 minutes.
 - **Action:** Removed 29 rows with non-positive ride lengths.
 - **Status:** Data cleaned; starting analysis.
+- **Action:** Attempted file export; troubleshooting console hang.
+- **Status:** Verifying workspace save.
