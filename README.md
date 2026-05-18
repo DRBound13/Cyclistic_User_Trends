@@ -18,7 +18,7 @@
     *   Formatted raw timestamps into standardized date/time variables.
     *   Extracted key analysis features: `day_of_week` and trip duration (`ride_length`).
     *   Removed data noise, including duplicates and 29 erroneous rows with negative ride lengths.
-    *   Handled missing values using `na.omit()` to ensure the results we're clean and accurate.
+    *   Handled missing values using `na.omit()` to ensure the results were clean and accurate.
 
 ---
 
@@ -28,12 +28,12 @@ By processing the full year of data, two obvious behavioral divides stood out be
 ### Key Finding 1: The Weekend Spike vs. The Weekday Grind
 Annual members provide a steady, predictable baseline of demand Monday through Friday, matching a standard working commuter profile. Casual riders, however, are "Weekend Warriors" as their volume drastically increases on Saturday and Sunday.
 
-![Weekly Ride Volume](images/weekly_ride_volume.png)
+![Weekly Ride Volume](weekly_ride_volume.png)
 
 ### Key Finding 2: The Trip Duration Gap
 While members are efficient, casual riders stay out more than **twice as long**. On average, casual trips last roughly 25 minutes, compared to a quick 12-minute average for members. This duration gap remains true every single day of the week.
 
-![Average Trip Duration](images/average_trip_duration.png)
+![Average Trip Duration](average_trip_duration.png)
 
 > **The Takeaway:** These distinct patterns prove a clear difference in intent. Annual members use Cyclistic as a utility for daily commuting. Casual riders use it as an experience for leisure, exercise, and weekend exploring.
 
