@@ -45,3 +45,73 @@ To successfully convert casual riders into annual members, the marketing team sh
 1.  **The "Weekend Warrior" Membership:** Introduce a targeted, lower-tier annual membership that specifically offers unlimited Friday–Sunday rides. This captures the high-volume weekend casual demographic without forcing them into a full 7-day commuter pass they don't need.
 2.  **Seasonal Summer Promotions:** Since casual trip lengths and volumes peak heavily during leisure months, launch digital marketing campaigns at high-traffic waterfront or park stations during late spring and summer.
 3.  **App-Based Invoicing Triggers:** Use the ride data to trigger targeted in-app promotions. If a non-member account clocks more than two 25+ minute rides in a single month, hit them with a notification showing how much money they would have saved by converting to a member.
+
+<details>
+<summary><b>Click to view the full R processing script</b></summary>
+
+### Combine all 12 monthly CSV files into one single dataset:
+bike_data <- list.files(path = "C:/Users/JHube/OneDrive/Desktop/Cycle_Data", pattern = "*.csv", full.names = TRUE) %>% 
+  lapply(read_csv) %>% 
+  bind_rows()
+
+### Load required libraries:
+library(tidyverse)
+library(lubridate)
+
+### Filter out rows where ride length is missing or negative:
+bike_data_clean <- bike_data %>%
+  filter(!is.na(ride_length) & ride_length > 0) %>%
+  filter(!is.na(day_of_week)) %>%
+  distinct()
+
+### Order the days of the week chronologically:
+bike_data_clean$day_of_week <- factor(bike_data_clean$day_of_week, 
+  levels = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))
+
+### Summarize cleaned data and plot weekly ride trends with custom weekend highlighting:
+bike_data_clean %>% 
+  mutate(day_of_week = factor(day_of_week, levels = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))) %>% 
+  group_by(day_of_week, member_casual) %>% 
+  summarise(number_of_rides = n(), .groups = 'drop') %>% 
+  mutate(is_weekend = day_of_week %in% c("Saturday", "Sunday")) %>% 
+  ggplot(aes(x = day_of_week, y = number_of_rides, color = member_casual, group = member_casual)) +
+  geom_line(size = 1.2) +
+  geom_point(aes(size = ifelse(is_weekend & member_casual == "casual", 5, 3))) + 
+  scale_y_continuous(labels = scales::comma) +
+  scale_x_discrete(labels = c("Monday" = "Mon", "Tuesday" = "Tue", "Wednesday" = "Wed", "Thursday" = "Thu", "Friday" = "Fri", "Saturday" = "Sat", "Sunday" = "Sun")) +
+  scale_color_manual(values = c("casual" = "#FF4B4B", "member" = "#1A365D")) + 
+  scale_size_identity() +
+  labs(
+    title = "Weekly Ride Volume",
+    subtitle = "Casual riders peak heavily on the weekend",
+    x = "Day of the Week", 
+    y = "Total Rides", 
+    color = "Rider Type"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(face = "bold", size = 14),
+    panel.grid.minor = element_blank()
+  )
+
+### Plot a side-by-side bar chart comparing raw ride counts by day and user type:
+bike_data_clean %>% 
+  mutate(day_of_week = factor(day_of_week, levels = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))) %>% 
+  group_by(day_of_week, member_casual) %>% 
+  summarise(avg_duration = mean(ride_length, na.rm = TRUE), .groups = 'drop') %>% 
+  ggplot(aes(x = day_of_week, y = avg_duration, fill = member_casual)) +
+  geom_col(position = "dodge", width = 0.7) +
+  scale_x_discrete(labels = c("Monday" = "Mon", "Tuesday" = "Tue", "Wednesday" = "Wed", "Thursday" = "Thu", "Friday" = "Fri", "Saturday" = "Sat", "Sunday" = "Sun")) +
+  scale_fill_manual(values = c("casual" = "#FF4B4B", "member" = "#1A365D")) +
+  labs(
+    title = "Average Trip Duration",
+    subtitle = "Casual riders take significantly longer trips every day of the week",
+    x = "Day of the Week",
+    y = "Average Minutes Per Ride",
+    fill = "Rider Type"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(face = "bold", size = 14),
+    panel.grid.minor = element_blank()
+  )
